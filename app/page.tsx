@@ -108,15 +108,14 @@ const coachingTasks = [
   "10-minute recovery walk after dinner",
   "Coach check-in due by 7 PM",
 ];
-
-function Pill({
-  children,
-  tone = "default",
-}: {
+type PillTone = "default" | "dark" | "success" | "warm";
+type PillProps = {
   children: React.ReactNode;
-  tone?: string;
-}) {
-  const tones = {
+  tone?: PillTone;
+};
+
+function Pill({ children, tone = "default" }: PillProps) {
+  const tones: Record<PillTone, string> = {
     default: "bg-zinc-100 text-zinc-700",
     dark: "bg-zinc-950 text-white",
     success: "bg-emerald-50 text-emerald-700 ring-1 ring-emerald-100",
@@ -130,14 +129,19 @@ function Pill({
   );
 }
 
-function Card({
-  children,
-  className = "",
-}: {
+type CardProps = {
   children: React.ReactNode;
   className?: string;
-}) {
-  return <div className={`rounded-3xl border border-zinc-200 bg-white p-5 shadow-sm ${className}`}>{children}</div>;
+};
+
+function Card({ children, className = "" }: CardProps) {
+  return (
+    <div
+      className={`rounded-3xl border border-zinc-200 bg-white p-5 shadow-sm ${className}`}
+    >
+      {children}
+    </div>
+  );
 }
 
 export default function FireSwaProofOfConcept() {
