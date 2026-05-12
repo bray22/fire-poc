@@ -12,9 +12,11 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata = {
-  title: "FIRE Client Hub",
-  description: "All-in-one client performance dashboard",
+export const metadata: Metadata = {
+  title: "EVOLV",
+  description: "Performance • Recovery • Longevity",
+  manifest: "/manifest.webmanifest",
+  themeColor: "#000000",
   icons: {
     icon: "/icon-192.png",
     apple: "/apple-touch-icon.png",

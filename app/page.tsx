@@ -108,7 +108,9 @@ const coachingTasks = [
   "10-minute recovery walk after dinner",
   "Coach check-in due by 7 PM",
 ];
+
 type PillTone = "default" | "dark" | "success" | "warm";
+
 type PillProps = {
   children: React.ReactNode;
   tone?: PillTone;
@@ -116,14 +118,16 @@ type PillProps = {
 
 function Pill({ children, tone = "default" }: PillProps) {
   const tones: Record<PillTone, string> = {
-    default: "bg-zinc-100 text-zinc-700",
-    dark: "bg-zinc-950 text-white",
-    success: "bg-emerald-50 text-emerald-700 ring-1 ring-emerald-100",
-    warm: "bg-orange-50 text-orange-700 ring-1 ring-orange-100",
+    default: "bg-zinc-800 text-zinc-300 ring-1 ring-zinc-700",
+    dark: "bg-amber-400 text-black",
+    success: "bg-emerald-400/10 text-emerald-300 ring-1 ring-emerald-400/20",
+    warm: "bg-amber-400/10 text-amber-300 ring-1 ring-amber-400/20",
   };
 
   return (
-    <span className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${tones[tone]}`}>
+    <span
+      className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${tones[tone]}`}
+    >
       {children}
     </span>
   );
@@ -137,7 +141,7 @@ type CardProps = {
 function Card({ children, className = "" }: CardProps) {
   return (
     <div
-      className={`rounded-3xl border border-zinc-200 bg-white p-5 shadow-sm ${className}`}
+      className={`rounded-3xl border border-zinc-800 bg-zinc-950/80 p-5 shadow-2xl shadow-black/30 backdrop-blur ${className}`}
     >
       {children}
     </div>
@@ -148,73 +152,86 @@ export default function FireSwaProofOfConcept() {
   const [selectedView, setSelectedView] = useState("Today");
 
   const statusText = useMemo(() => {
-    if (selectedView === "Today") return "Your recovery is high. Today is a strong training day.";
-    if (selectedView === "Week") return "Weekly trend is improving across sleep, readiness, and nutrition.";
+    if (selectedView === "Today") {
+      return "Your recovery is high. Today is a strong training day.";
+    }
+
+    if (selectedView === "Week") {
+      return "Weekly trend is improving across sleep, readiness, and nutrition.";
+    }
+
     return "Coach view highlights the actions most likely to move the client forward.";
   }, [selectedView]);
 
   return (
-    <div className="min-h-screen bg-zinc-50 text-zinc-950">
-      <div className="mx-auto flex max-w-7xl gap-6 px-4 py-6 lg:px-8">
-        <aside className="hidden w-64 shrink-0 rounded-[2rem] bg-zinc-950 p-5 text-white shadow-xl lg:block">
+    <div className="min-h-screen bg-black text-white">
+      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_top_right,rgba(245,158,11,0.18),transparent_35%),radial-gradient(circle_at_bottom_left,rgba(245,158,11,0.08),transparent_35%)]" />
+
+      <div className="relative mx-auto flex max-w-7xl gap-6 px-4 py-6 lg:px-8">
+        <aside className="hidden w-64 shrink-0 rounded-[2rem] border border-zinc-800 bg-zinc-950/90 p-5 text-white shadow-2xl shadow-black/40 lg:block">
           <div className="mb-10 flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white text-zinc-950">
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-amber-400 text-black shadow-lg shadow-amber-500/20">
               <Flame className="h-6 w-6" />
             </div>
             <div>
-              <p className="text-lg font-bold tracking-tight">FIRE</p>
-              <p className="text-xs text-zinc-400">Client Performance Hub</p>
+              <p className="text-lg font-bold tracking-tight">EVOLV</p>
+              <p className="text-xs text-zinc-500">Client Performance Hub</p>
             </div>
           </div>
 
           <nav className="space-y-2">
-          {[
-            { icon: LineChart, label: "Dashboard" },
-            { icon: Watch, label: "Integrations" },
-            { icon: Dumbbell, label: "Training" },
-            { icon: Apple, label: "Nutrition" },
-            { icon: MessageCircle, label: "Coach Chat" },
-          ].map(({ icon: Icon, label }, index) => (
-            <button
-              key={label}
-              className={`flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-sm transition ${
-                index === 0
-                  ? "bg-white text-zinc-950"
-                  : "text-zinc-300 hover:bg-white/10 hover:text-white"
-              }`}
-            >
-              <Icon className="h-4 w-4" />
-              {label}
-            </button>
-          ))}
+            {[
+              { icon: LineChart, label: "Dashboard" },
+              { icon: Watch, label: "Integrations" },
+              { icon: Dumbbell, label: "Training" },
+              { icon: Apple, label: "Nutrition" },
+              { icon: MessageCircle, label: "Coach Chat" },
+            ].map(({ icon: Icon, label }, index) => (
+              <button
+                key={label}
+                className={`flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-sm transition ${
+                  index === 0
+                    ? "bg-amber-400 text-black"
+                    : "text-zinc-400 hover:bg-white/10 hover:text-white"
+                }`}
+              >
+                <Icon className="h-4 w-4" />
+                {label}
+              </button>
+            ))}
           </nav>
 
-          <div className="mt-10 rounded-3xl bg-white/10 p-4">
-            <Sparkles className="mb-3 h-5 w-5 text-orange-300" />
-            <p className="text-sm font-semibold">POC Goal</p>
+          <div className="mt-10 rounded-3xl border border-amber-400/20 bg-amber-400/10 p-4">
+            <Sparkles className="mb-3 h-5 w-5 text-amber-300" />
+            <p className="text-sm font-semibold text-amber-100">POC Goal</p>
             <p className="mt-1 text-xs leading-5 text-zinc-400">
-              Show how external health apps can feed one branded client experience.
+              Show how external health apps can feed one branded client
+              experience.
             </p>
           </div>
         </aside>
 
         <main className="flex-1 space-y-6">
-          <header className="flex flex-col justify-between gap-4 rounded-[2rem] bg-white p-5 shadow-sm md:flex-row md:items-center">
+          <header className="flex flex-col justify-between gap-4 rounded-[2rem] border border-zinc-800 bg-zinc-950/80 p-5 shadow-2xl shadow-black/30 backdrop-blur md:flex-row md:items-center">
             <div>
               <div className="mb-2 flex items-center gap-2">
                 <Pill tone="dark">Proof of Concept</Pill>
                 <Pill tone="success">All systems synced</Pill>
               </div>
-              <h1 className="text-3xl font-bold tracking-tight md:text-4xl">Good morning, Alex</h1>
-              <p className="mt-2 max-w-2xl text-sm text-zinc-600">
-                One branded app that pulls recovery, sleep, nutrition, body composition, and coaching into a single dashboard.
+              <h1 className="text-3xl font-bold tracking-tight md:text-4xl">
+                Good morning, Alex
+              </h1>
+              <p className="mt-2 max-w-2xl text-sm text-zinc-400">
+                One branded app that pulls recovery, sleep, nutrition, body
+                composition, and coaching into a single premium dashboard.
               </p>
             </div>
+
             <div className="flex items-center gap-3">
-              <button className="rounded-2xl border border-zinc-200 p-3 hover:bg-zinc-50">
+              <button className="rounded-2xl border border-zinc-800 p-3 text-zinc-300 hover:bg-zinc-900">
                 <Bell className="h-5 w-5" />
               </button>
-              <button className="flex items-center gap-2 rounded-2xl bg-zinc-950 px-4 py-3 text-sm font-medium text-white shadow-sm">
+              <button className="flex items-center gap-2 rounded-2xl bg-amber-400 px-4 py-3 text-sm font-semibold text-black shadow-lg shadow-amber-500/20">
                 <User className="h-4 w-4" />
                 Client Profile
               </button>
@@ -224,6 +241,7 @@ export default function FireSwaProofOfConcept() {
           <section className="grid gap-4 md:grid-cols-4">
             {metrics.map((metric, index) => {
               const Icon = metric.icon;
+
               return (
                 <motion.div
                   key={metric.label}
@@ -233,14 +251,18 @@ export default function FireSwaProofOfConcept() {
                 >
                   <Card>
                     <div className="mb-5 flex items-center justify-between">
-                      <div className="rounded-2xl bg-zinc-100 p-3">
+                      <div className="rounded-2xl bg-amber-400/10 p-3 text-amber-300 ring-1 ring-amber-400/20">
                         <Icon className="h-5 w-5" />
                       </div>
                       <Pill>{metric.source}</Pill>
                     </div>
                     <p className="text-sm text-zinc-500">{metric.label}</p>
-                    <p className="mt-1 text-3xl font-bold tracking-tight">{metric.value}</p>
-                    <p className="mt-2 text-xs text-zinc-500">{metric.detail}</p>
+                    <p className="mt-1 text-3xl font-bold tracking-tight text-white">
+                      {metric.value}
+                    </p>
+                    <p className="mt-2 text-xs text-zinc-400">
+                      {metric.detail}
+                    </p>
                   </Card>
                 </motion.div>
               );
@@ -252,15 +274,20 @@ export default function FireSwaProofOfConcept() {
               <div className="mb-6 flex flex-col justify-between gap-3 md:flex-row md:items-center">
                 <div>
                   <h2 className="text-xl font-bold">Unified Recovery Trend</h2>
-                  <p className="mt-1 text-sm text-zinc-500">Oura + training + nutrition data displayed in one place.</p>
+                  <p className="mt-1 text-sm text-zinc-400">
+                    Oura + training + nutrition data displayed in one place.
+                  </p>
                 </div>
-                <div className="flex rounded-2xl bg-zinc-100 p-1">
+
+                <div className="flex rounded-2xl bg-zinc-900 p-1">
                   {["Today", "Week", "Coach"].map((view) => (
                     <button
                       key={view}
                       onClick={() => setSelectedView(view)}
                       className={`rounded-xl px-4 py-2 text-sm font-medium transition ${
-                        selectedView === view ? "bg-white shadow-sm" : "text-zinc-500"
+                        selectedView === view
+                          ? "bg-amber-400 text-black"
+                          : "text-zinc-400 hover:text-white"
                       }`}
                     >
                       {view}
@@ -271,18 +298,54 @@ export default function FireSwaProofOfConcept() {
 
               <div className="h-72">
                 <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={weeklyRecovery} margin={{ left: 0, right: 16, top: 12, bottom: 0 }}>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                    <XAxis dataKey="day" axisLine={false} tickLine={false} />
-                    <YAxis axisLine={false} tickLine={false} domain={[40, 100]} />
-                    <Tooltip />
-                    <Area type="monotone" dataKey="sleep" stroke="currentColor" fill="currentColor" fillOpacity={0.08} />
-                    <Area type="monotone" dataKey="readiness" stroke="currentColor" fill="currentColor" fillOpacity={0.12} />
+                  <AreaChart
+                    data={weeklyRecovery}
+                    margin={{ left: 0, right: 16, top: 12, bottom: 0 }}
+                  >
+                    <CartesianGrid
+                      strokeDasharray="3 3"
+                      vertical={false}
+                      stroke="rgba(255,255,255,0.08)"
+                    />
+                    <XAxis
+                      dataKey="day"
+                      axisLine={false}
+                      tickLine={false}
+                      tick={{ fill: "#a1a1aa" }}
+                    />
+                    <YAxis
+                      axisLine={false}
+                      tickLine={false}
+                      domain={[40, 100]}
+                      tick={{ fill: "#a1a1aa" }}
+                    />
+                    <Tooltip
+                      contentStyle={{
+                        backgroundColor: "#09090b",
+                        border: "1px solid #27272a",
+                        borderRadius: "16px",
+                        color: "#ffffff",
+                      }}
+                    />
+                    <Area
+                      type="monotone"
+                      dataKey="sleep"
+                      stroke="#fbbf24"
+                      fill="#fbbf24"
+                      fillOpacity={0.12}
+                    />
+                    <Area
+                      type="monotone"
+                      dataKey="readiness"
+                      stroke="#f59e0b"
+                      fill="#f59e0b"
+                      fillOpacity={0.18}
+                    />
                   </AreaChart>
                 </ResponsiveContainer>
               </div>
 
-              <div className="mt-4 rounded-2xl bg-zinc-950 p-4 text-white">
+              <div className="mt-4 rounded-2xl border border-amber-400/20 bg-amber-400/10 p-4 text-amber-50">
                 <p className="flex items-center gap-2 text-sm font-semibold">
                   <ShieldCheck className="h-4 w-4" />
                   Smart Recommendation
@@ -295,23 +358,28 @@ export default function FireSwaProofOfConcept() {
               <div className="mb-5 flex items-center justify-between">
                 <div>
                   <h2 className="text-xl font-bold">Today’s Plan</h2>
-                  <p className="mt-1 text-sm text-zinc-500">Coach-generated priorities.</p>
+                  <p className="mt-1 text-sm text-zinc-400">
+                    Coach-generated priorities.
+                  </p>
                 </div>
-                <Activity className="h-5 w-5 text-zinc-400" />
+                <Activity className="h-5 w-5 text-amber-300" />
               </div>
 
               <div className="space-y-3">
                 {coachingTasks.map((task, index) => (
-                  <div key={task} className="flex items-start gap-3 rounded-2xl bg-zinc-50 p-3">
-                    <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-zinc-950 text-xs font-bold text-white">
+                  <div
+                    key={task}
+                    className="flex items-start gap-3 rounded-2xl border border-zinc-800 bg-zinc-900/80 p-3"
+                  >
+                    <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-amber-400 text-xs font-bold text-black">
                       {index + 1}
                     </div>
-                    <p className="text-sm leading-5 text-zinc-700">{task}</p>
+                    <p className="text-sm leading-5 text-zinc-300">{task}</p>
                   </div>
                 ))}
               </div>
 
-              <button className="mt-5 flex w-full items-center justify-center gap-2 rounded-2xl bg-orange-600 px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-orange-700">
+              <button className="mt-5 flex w-full items-center justify-center gap-2 rounded-2xl bg-amber-400 px-4 py-3 text-sm font-semibold text-black shadow-lg shadow-amber-500/20 hover:bg-amber-300">
                 Message Coach
                 <ChevronRight className="h-4 w-4" />
               </button>
@@ -323,9 +391,12 @@ export default function FireSwaProofOfConcept() {
               <div className="mb-5 flex items-center justify-between">
                 <div>
                   <h2 className="text-xl font-bold">Connected Apps</h2>
-                  <p className="mt-1 text-sm text-zinc-500">External services feeding the FIRE dashboard.</p>
+                  <p className="mt-1 text-sm text-zinc-400">
+                    External services feeding the EVOLV dashboard.
+                  </p>
                 </div>
-                <button className="flex items-center gap-2 rounded-2xl border border-zinc-200 px-3 py-2 text-sm font-medium hover:bg-zinc-50">
+
+                <button className="flex items-center gap-2 rounded-2xl border border-zinc-800 px-3 py-2 text-sm font-medium text-zinc-300 hover:bg-zinc-900">
                   <RefreshCw className="h-4 w-4" />
                   Sync
                 </button>
@@ -334,20 +405,29 @@ export default function FireSwaProofOfConcept() {
               <div className="space-y-3">
                 {integrations.map((integration) => {
                   const Icon = integration.icon;
+
                   return (
-                    <div key={integration.name} className="flex items-center justify-between rounded-2xl border border-zinc-100 p-4">
+                    <div
+                      key={integration.name}
+                      className="flex items-center justify-between rounded-2xl border border-zinc-800 bg-zinc-900/60 p-4"
+                    >
                       <div className="flex items-center gap-3">
-                        <div className="rounded-2xl bg-zinc-100 p-3">
+                        <div className="rounded-2xl bg-amber-400/10 p-3 text-amber-300 ring-1 ring-amber-400/20">
                           <Icon className="h-5 w-5" />
                         </div>
                         <div>
                           <p className="font-semibold">{integration.name}</p>
-                          <p className="text-sm text-zinc-500">{integration.type}</p>
+                          <p className="text-sm text-zinc-400">
+                            {integration.type}
+                          </p>
                         </div>
                       </div>
+
                       <div className="text-right">
                         <Pill tone="success">{integration.status}</Pill>
-                        <p className="mt-1 text-xs text-zinc-400">{integration.lastSync}</p>
+                        <p className="mt-1 text-xs text-zinc-500">
+                          {integration.lastSync}
+                        </p>
                       </div>
                     </div>
                   );
@@ -355,12 +435,16 @@ export default function FireSwaProofOfConcept() {
               </div>
             </Card>
 
-            <Card className="bg-zinc-950 text-white">
+            <Card className="border-amber-400/20 bg-gradient-to-br from-zinc-950 via-zinc-950 to-amber-950/30">
               <div className="mb-8">
                 <Pill tone="warm">Top Tier Member Experience</Pill>
-                <h2 className="mt-4 text-2xl font-bold tracking-tight">The client only needs one daily home base.</h2>
-                <p className="mt-3 text-sm leading-6 text-zinc-300">
-                  Oura, CalAI, ShapeScale, and coaching tools can still exist in the background, but the client-facing experience becomes simple: open FIRE and see everything that matters.
+                <h2 className="mt-4 text-2xl font-bold tracking-tight">
+                  The client only needs one daily home base.
+                </h2>
+                <p className="mt-3 text-sm leading-6 text-zinc-400">
+                  Oura, CalAI, ShapeScale, and coaching tools can still exist in
+                  the background, but the client-facing experience becomes
+                  simple: open EVOLV and see everything that matters.
                 </p>
               </div>
 
@@ -371,13 +455,16 @@ export default function FireSwaProofOfConcept() {
                   "Coach-visible insights",
                   "Subscription differentiator",
                 ].map((item) => (
-                  <div key={item} className="rounded-2xl bg-white/10 p-4 text-sm font-medium">
+                  <div
+                    key={item}
+                    className="rounded-2xl border border-amber-400/10 bg-white/5 p-4 text-sm font-medium text-zinc-200"
+                  >
                     {item}
                   </div>
                 ))}
               </div>
 
-              <button className="mt-6 flex w-full items-center justify-center gap-2 rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-zinc-950">
+              <button className="mt-6 flex w-full items-center justify-center gap-2 rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-black">
                 View Integration Roadmap
                 <ChevronRight className="h-4 w-4" />
               </button>
