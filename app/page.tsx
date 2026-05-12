@@ -109,7 +109,13 @@ const coachingTasks = [
   "Coach check-in due by 7 PM",
 ];
 
-function Pill({ children, tone = "default" }) {
+function Pill({
+  children,
+  tone = "default",
+}: {
+  children: React.ReactNode;
+  tone?: string;
+}) {
   const tones = {
     default: "bg-zinc-100 text-zinc-700",
     dark: "bg-zinc-950 text-white",
@@ -124,7 +130,13 @@ function Pill({ children, tone = "default" }) {
   );
 }
 
-function Card({ children, className = "" }) {
+function Card({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
   return <div className={`rounded-3xl border border-zinc-200 bg-white p-5 shadow-sm ${className}`}>{children}</div>;
 }
 
@@ -152,23 +164,25 @@ export default function FireSwaProofOfConcept() {
           </div>
 
           <nav className="space-y-2">
-            {[
-              [LineChart, "Dashboard"],
-              [Watch, "Integrations"],
-              [Dumbbell, "Training"],
-              [Apple, "Nutrition"],
-              [MessageCircle, "Coach Chat"],
-            ].map(([Icon, label], index) => (
-              <button
-                key={label}
-                className={`flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-sm transition ${
-                  index === 0 ? "bg-white text-zinc-950" : "text-zinc-300 hover:bg-white/10 hover:text-white"
-                }`}
-              >
-                <Icon className="h-4 w-4" />
-                {label}
-              </button>
-            ))}
+          {[
+            { icon: LineChart, label: "Dashboard" },
+            { icon: Watch, label: "Integrations" },
+            { icon: Dumbbell, label: "Training" },
+            { icon: Apple, label: "Nutrition" },
+            { icon: MessageCircle, label: "Coach Chat" },
+          ].map(({ icon: Icon, label }, index) => (
+            <button
+              key={label}
+              className={`flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-sm transition ${
+                index === 0
+                  ? "bg-white text-zinc-950"
+                  : "text-zinc-300 hover:bg-white/10 hover:text-white"
+              }`}
+            >
+              <Icon className="h-4 w-4" />
+              {label}
+            </button>
+          ))}
           </nav>
 
           <div className="mt-10 rounded-3xl bg-white/10 p-4">
